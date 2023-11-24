@@ -7,12 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class DijkstrasShortestPathAdjacencyList {
-
-
+public class DijkstraShortestPath {
     private static final double EPS = 1e-6;
-
-
     public static class Edge {
         double cost;
         int from, to;
@@ -35,41 +31,24 @@ public class DijkstrasShortestPathAdjacencyList {
         }
     }
 
-    private int n;
-    private double[] dist;
+    private final int n;
     private Integer[] prev;
     private List<List<Edge>> graph;
 
-    private Comparator<Node> comparator =
-            new Comparator<Node>() {
-                @Override
-                public int compare(Node node1, Node node2) {
-                    if (Math.abs(node1.value - node2.value) < EPS) return 0;
-                    return (node1.value - node2.value) > 0 ? +1 : -1;
-                }
-            };
+    private final Comparator<Node> comparator = (node1, node2) -> {
+        if (Math.abs(node1.value - node2.value) < EPS) return 0;
+        return (node1.value - node2.value) > 0 ? +1 : -1;
+    };
 
 
-    public DijkstrasShortestPathAdjacencyList(int n) {
+    public DijkstraShortestPath(int n) {
         this.n = n;
         createEmptyGraph();
     }
 
-    public DijkstrasShortestPathAdjacencyList(int n, Comparator<Node> comparator) {
-        this(n);
-        if (comparator == null) throw new IllegalArgumentException("Comparator cannot be null");
-        this.comparator = comparator;
-    }
-
-
     public void addEdge(int from, int to, int cost) {
         graph.get(from).add(new Edge(from, to, cost));
     }
-
-    public List<List<Edge>> getGraph() {
-        return graph;
-    }
-
 
     public List<Integer> reconstructPath(int start, int end) {
         if (end < 0 || end >= n) throw new IllegalArgumentException("Invalid node index");
@@ -85,7 +64,7 @@ public class DijkstrasShortestPathAdjacencyList {
 
     public double dijkstra(int start, int end) {
 
-        dist = new double[n];
+        double[] dist = new double[n];
         Arrays.fill(dist, Double.POSITIVE_INFINITY);
         dist[start] = 0;
 
@@ -102,13 +81,11 @@ public class DijkstrasShortestPathAdjacencyList {
             visited[node.id] = true;
 
             // found a better path before we got to
-            // processing this node so we can ignore it.
+            // processing this node, so we can ignore it.
             if (dist[node.id] < node.value) continue;
 
             List<Edge> edges = graph.get(node.id);
-            for (int i = 0; i < edges.size(); i++) {
-                Edge edge = edges.get(i);
-
+            for (Edge edge : edges) {
                 // cannot get a shorter path by revisiting
                 // a node you have already visited before.
                 if (visited[edge.to]) continue;

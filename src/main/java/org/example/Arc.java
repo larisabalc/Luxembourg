@@ -5,41 +5,39 @@ import java.awt.geom.Line2D;
 
 public class Arc
 {
-    private Node start;
-    private Node end;
+    private final Node startNode;
+    private final Node endNode;
+    private final Color color;
+    private final int archCost;
 
-    private Color color;
-    private int val;
-
-    public int GetVal()
+    public int getArchCost()
     {
-        return val;
+        return archCost;
     }
-    public Node GetStart()
+    public Node getStartNode()
     {
-        return start;
+        return startNode;
     }
-
-    public Node GetEnd()
+    public Node getEndNode()
     {
-        return end;
+        return endNode;
     }
 
-    public Arc(Node start, Node end, int val,Color color)
+    public Arc(Node startNode, Node endNode, int archCost, Color color)
     {
         this.color = color;
-        this.start = start;
-        this.end = end;
-        this.val = val;
+        this.startNode = startNode;
+        this.endNode = endNode;
+        this.archCost = archCost;
     }
 
     public void drawArc(Graphics g)
     {
-        if (start != null)
+        if (startNode != null)
         {
             g.setColor(color);
             Graphics2D g2 = (Graphics2D) g;
-            g2.draw(new Line2D.Double(start.getCoordX(),  start.getCoordY(), end.getCoordX(),  end.getCoordY()));
+            g2.draw(new Line2D.Double(startNode.getCoordX(),  startNode.getCoordY(), endNode.getCoordX(),  endNode.getCoordY()));
         }
     }
 }
