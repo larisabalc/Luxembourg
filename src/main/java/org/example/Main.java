@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Main extends MyPanel {
     public static void main(String[] args) {
         XmlDeserializer xmlDeserializer = new XmlDeserializer();
-        xmlDeserializer.deserialize("C:\\Users\\boco274575\\Desktop\\Luxembourg\\hartaLuxembourg.xml", nodeList, archList);
+        xmlDeserializer.deserialize("hartaLuxembourg.xml", nodeList, archList);
 
         JFrame frame = new JFrame();
         MyPanel panel = new MyPanel();

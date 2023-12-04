@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 public class Node {
-    Color color;
+    private Color color;
     private final double coordX;
     private final double coordY;
     private final int number;
@@ -14,6 +14,10 @@ public class Node {
         this.coordX = coordX;
         this.coordY = coordY;
         this.number = number;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public void SetColor(Color color) {

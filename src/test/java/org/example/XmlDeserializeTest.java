@@ -11,7 +11,7 @@ public class XmlDeserializeTest
 {
     @Test
     public void testXmlDeserialization() {
-        String xmlFilePath = "C:\\Users\\boco274575\\Desktop\\Luxembourg\\hartaLuxembourg.xml";
+        String xmlFilePath = "hartaLuxembourg.xml";
 
         double expectedMinLong = 4945029.0;
         double expectedMinLat = 573929.0;
