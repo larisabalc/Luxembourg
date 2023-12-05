@@ -14,11 +14,12 @@ public class MyPanelTest {
 
     private MyPanel myPanel;
     private Robot robot;
+    JFrame frame;
 
     @Before
     public void setUp() throws AWTException {
         myPanel = new MyPanel();
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(myPanel);
         frame.setSize(400, 400);
@@ -31,6 +32,11 @@ public class MyPanelTest {
         MyPanel.nodesClicked = 0;
 
         robot = new Robot();
+    }
+
+    @After
+    public void tearDown() {
+        frame.dispose();
     }
 
     @Test
@@ -82,13 +88,13 @@ public class MyPanelTest {
         Point componentLocation = component.getLocationOnScreen();
         robot.mouseMove(componentLocation.x + x, componentLocation.y + y);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(1000);
+        robot.delay(300);
     }
 
     private void simulateMouseRelease(Component component, int x, int y) {
         Point componentLocation = component.getLocationOnScreen();
         robot.mouseMove(componentLocation.x + x, componentLocation.y + y);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(1000);
+        robot.delay(100);
     }
 }
