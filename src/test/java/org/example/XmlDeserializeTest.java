@@ -1,17 +1,25 @@
 package org.example;
 
 import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XmlDeserializeTest
 {
-    @Test
-    public void testXmlDeserialization() {
-        String xmlFilePath = "hartaLuxembourg.xml";
+    @ParameterizedTest
+    @MethodSource("xmlFilePathProvider")
+    public void testXmlDeserialization(String xmlFilePath) {
+        assertTrue(isValidXmlFilePath(xmlFilePath), "Invalid XML file path: " + xmlFilePath);
 
         double expectedMinLong = 4945029.0;
         double expectedMinLat = 573929.0;
@@ -35,5 +43,16 @@ public class XmlDeserializeTest
 
         assertEquals(expectedNodeListSize, XmlDeserializer.nodeList.size(), 0);
         assertEquals(expectedArchListSize, archList.size(), 0);
+    }
+
+    private static Stream<Arguments> xmlFilePathProvider() {
+        return Stream.of(
+                Arguments.of("hartaLuxembourg.xml"),
+                Arguments.of("MARIAN")
+        );
+    }
+
+    private static boolean isValidXmlFilePath(String xmlFilePath) {
+        return Files.exists(Path.of(xmlFilePath));
     }
 }
